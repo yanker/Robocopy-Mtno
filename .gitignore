@@ -1,0 +1,4 @@
+# Generado por build.ps1 (se recrea solo)
+dist/
+out/
+tools/refasm/
