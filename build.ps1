@@ -43,7 +43,7 @@ $config = Join-Path $root 'src\CopiaSegura.exe.config'
 
 # --- Aplicacion ---
 $appSrc = @(Get-ChildItem (Join-Path $root 'src') -Recurse -Filter *.cs | ForEach-Object FullName)
-Invoke-Csc 'winexe' (Join-Path $distDir 'CopiaSegura.exe') $appSrc @("/win32manifest:$(Join-Path $root 'src\app.manifest')")
+Invoke-Csc 'winexe' (Join-Path $distDir 'CopiaSegura.exe') $appSrc @("/win32manifest:$(Join-Path $root 'src\app.manifest')", "/win32icon:$(Join-Path $root 'src\icono.ico')")
 Copy-Item $config (Join-Path $distDir 'CopiaSegura.exe.config') -Force
 
 # --- Pruebas ---

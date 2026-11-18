@@ -29,6 +29,7 @@ namespace CopiaSegura.UI
         public MainForm()
         {
             Text = "Copia Segura";
+            try { Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath); } catch (Exception) { }
             Font = UiKit.Normal;
             ClientSize = new Size(980, 760);
             MinimumSize = new Size(840, 620);

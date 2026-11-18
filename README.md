@@ -6,6 +6,12 @@ Programa portable para Windows que guía paso a paso la copia de una carpeta (eq
 - **Seguro por defecto:** el origen solo se lee; no se borra nada que no esté en el origen; las opciones peligrosas (`/MIR`, `/PURGE`, `/MOVE`) están bloqueadas hasta escribir `BORRAR`.
 - **Windows 7 SP1, 10 y 11.** Windows XP no está soportado.
 
+## Descarga
+
+**https://yanker.github.io/Robocopy-Mtno/** · descarga directa: [`CopiaSegura.zip`](https://yanker.github.io/Robocopy-Mtno/CopiaSegura.zip)
+
+La web vive en la rama `gh-pages` (se actualiza con `./publicar.ps1`).
+
 ## Uso
 
 1. Ejecuta `CopiaSegura.exe` (déjalo junto a `CopiaSegura.exe.config`).
@@ -31,12 +37,20 @@ robocopy "ORIGEN" "DESTINO" /E /Z /COPY:DAT /DCOPY:DAT /XJ /R:1 /W:2 /MT:2 /TEE 
 ROBOCOPY/
 ├── README.md                  Este archivo
 ├── build.ps1                  Compila, ejecuta las pruebas y empaqueta
+├── publicar.ps1               Compila y publica zip + web en la rama gh-pages
+├── .gitignore                 Ignora dist/, out/ y tools/refasm/ (se generan solos)
 ├── maqueta.html               Maqueta visual aprobada (referencia del diseño)
+├── site/                      Web de descarga (GitHub Pages)
+│   ├── index.html                 Plantilla ({{FECHA}}, {{TAMANO}}, {{SHA256}})
+│   ├── favicon.svg                Logo vectorial
+│   ├── generar-iconos.ps1         Genera src\icono.ico y img\logo-512.png
+│   └── img/                       Logo y capturas reales de cada paso
 ├── copia-segura-robocopy.md   Conversación original que dio origen al proyecto
 │
 ├── src/                       Código fuente de la aplicación
 │   ├── Program.cs             Punto de entrada (--smoke y --shots para pruebas)
 │   ├── app.manifest           Ejecución sin administrador; compatible Windows 7-10
+│   ├── icono.ico              Icono del programa (el logo)
 │   ├── CopiaSegura.exe.config Usa .NET 4.x si existe; si no, .NET 3.5 (Windows 7)
 │   ├── LEEME.txt              Instrucciones que viajan dentro del paquete
 │   ├── Core/                  Lógica sin interfaz (es lo que prueban los tests)
@@ -90,10 +104,16 @@ Requisitos: Windows con .NET Framework 4.x (trae `csc.exe`) y conexión la prime
 ./build.ps1 -Dist                 # además genera dist\CopiaSegura.zip
 ```
 
-Para ver el aspecto de cada pantalla sin abrir la aplicación a mano:
+Para ver el aspecto de cada pantalla sin abrir la aplicación a mano (así se generan las capturas de la web):
 
 ```powershell
-dist\CopiaSegura\CopiaSegura.exe --shots out\shots
+dist\CopiaSegura\CopiaSegura.exe --shots site\img
+```
+
+Para publicar una nueva versión de la descarga:
+
+```powershell
+./publicar.ps1    # compila, prueba, empaqueta y sube zip + web a la rama gh-pages
 ```
 
 ## Detalles técnicos

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Copia Segura · copia guiada con Robocopy</title>
+<meta name="description" content="Programa portable para Windows que copia carpetas a un disco externo con Robocopy, paso a paso, con cada opción explicada y verificación al final.">
+<meta property="og:title" content="Copia Segura">
+<meta property="og:description" content="Copia guiada y segura de carpetas con Robocopy. Portable, sin instalar.">
+<meta property="og:image" content="https://yanker.github.io/Robocopy-Mtno/img/logo-512.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#f4f7fb; --card:#ffffff; --ink:#14202e; --muted:#566678; --line:#dbe3ec;
+    --pri:#1f6feb; --pri2:#4c9bff; --pri-ink:#ffffff; --soft:#e9f1ff;
+    --ok:#1a7f37; --okbg:#e6f4ea; --warn:#9a4d00; --warnbg:#fff3de;
+    --code:#0f1b29; --codeink:#b8e0ff; --shadow:0 10px 30px rgba(20,40,80,.12);
+    --hero1:#e8f1ff; --hero2:#f4f7fb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0d141d; --card:#151f2b; --ink:#e8eef6; --muted:#9bacbf; --line:#263444;
+      --pri:#4c9bff; --pri2:#79b4ff; --pri-ink:#06121f; --soft:#14283f;
+      --ok:#5fd07f; --okbg:#12301c; --warn:#ffb454; --warnbg:#33260f;
+      --shadow:0 10px 30px rgba(0,0,0,.45); --hero1:#12233a; --hero2:#0d141d;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",system-ui,-apple-system,sans-serif}
+  a{color:var(--pri)}
+  a:focus-visible,.btn:focus-visible{outline:3px solid var(--pri);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+  /* Cabecera */
+  header{padding:18px 0}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem;color:var(--ink);text-decoration:none}
+  .brand svg{width:38px;height:38px;display:block;filter:drop-shadow(0 4px 8px rgba(31,111,235,.35))}
+  nav{display:flex;justify-content:space-between;align-items:center}
+  nav .links a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.95rem}
+  nav .links a:hover{color:var(--pri)}
+  @media (max-width:560px){nav .links{display:none}}
+
+  /* Portada */
+  .hero{background:radial-gradient(1000px 420px at 50% -80px,var(--hero1),var(--hero2));padding:28px 0 70px;text-align:center}
+  .hero .logo{width:128px;height:128px;margin:6px auto 10px;display:block;filter:drop-shadow(0 14px 22px rgba(31,111,235,.4))}
+  h1{font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.1;margin:8px 0 10px;letter-spacing:-.02em}
+  h1 span{background:linear-gradient(90deg,var(--pri),var(--pri2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{max-width:640px;margin:0 auto 26px;color:var(--muted);font-size:1.15rem}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;padding:13px 24px;border-radius:10px}
+  .btn.primary{background:linear-gradient(135deg,var(--pri),var(--pri2));color:var(--pri-ink);box-shadow:0 8px 20px rgba(31,111,235,.35)}
+  .btn.primary:hover{filter:brightness(1.07);transform:translateY(-1px)}
+  .btn.ghost{border:1px solid var(--line);color:var(--ink);background:var(--card)}
+  .btn svg{width:20px;height:20px}
+  .meta{margin-top:14px;color:var(--muted);font-size:.9rem}
+  .shot{margin:46px auto 0;max-width:880px}
+  .win{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+  .win img{display:block;width:100%;height:auto}
+  .shot .win img{aspect-ratio:996/500;object-fit:cover;object-position:top}
+
+  /* Secciones */
+  section{padding:56px 0 8px}
+  h2{font-size:1.7rem;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0 0 28px;max-width:640px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card .ic{width:42px;height:42px;border-radius:10px;background:var(--soft);display:grid;place-items:center;margin-bottom:12px}
+  .card .ic svg{width:22px;height:22px;stroke:var(--pri);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .card h3{margin:0 0 4px;font-size:1.05rem}
+  .card p{margin:0;color:var(--muted);font-size:.96rem}
+
+  /* Pasos con capturas */
+  .steps{display:grid;gap:34px}
+  .step{display:grid;grid-template-columns:1fr 1.25fr;gap:26px;align-items:center}
+  .step:nth-child(even) .txt{order:2}
+  .step .num{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--pri);color:var(--pri-ink);font-weight:700;margin-bottom:8px}
+  .step h3{margin:0 0 6px;font-size:1.2rem}
+  .step p{margin:0;color:var(--muted)}
+  @media (max-width:760px){.step{grid-template-columns:1fr}.step:nth-child(even) .txt{order:0}}
+
+  /* Descarga */
+  .download{margin-top:56px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:var(--pri-ink);border-radius:18px;padding:36px 28px;text-align:center;box-shadow:var(--shadow)}
+  .download h2{margin-bottom:8px}
+  .download p{margin:0 auto 18px;max-width:560px;opacity:.95}
+  .download .btn{background:var(--pri-ink);color:var(--pri)}
+  .download .btn:hover{filter:brightness(.95)}
+  @media (prefers-color-scheme: dark){.download .btn{background:#06121f;color:var(--pri2)}}
+  .hash{display:block;margin:18px auto 0;max-width:640px;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,.28);color:#e6f1ff;font:12px/1.4 Consolas,monospace;word-break:break-all;text-align:left}
+  .note{border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.95rem}
+  .note.ok{background:var(--okbg);color:var(--ok)}
+  .note.warn{background:var(--warnbg);color:var(--warn)}
+  ul.clean{padding-left:20px;margin:8px 0 0}
+  ul.clean li{margin:6px 0;color:var(--muted)}
+  footer{margin-top:60px;padding:28px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Principal">
+      <a class="brand" href="#">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
+        Copia Segura
+      </a>
+      <div class="links">
+        <a href="#pasos">Cómo funciona</a>
+        <a href="#ventajas">Ventajas</a>
+        <a href="#descarga">Descargar</a>
+        <a href="https://github.com/yanker/Robocopy-Mtno">GitHub</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Logo y iconos reutilizables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f6feb"/><stop offset="1" stop-color="#4c9bff"/></linearGradient>
+    <g id="logo">
+      <rect width="64" height="64" rx="14" fill="url(#lg)"/>
+      <rect x="11" y="17" width="24" height="31" rx="4" fill="#fff" fill-opacity=".37"/>
+      <path d="M40 13 55 19v13c0 10-7 16-15 20-8-4-15-10-15-20V19z" fill="#fff"/>
+      <path d="m33 33 5.5 5.5L47.5 26.5" fill="none" stroke="#1f6feb" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </defs>
+</svg>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <svg class="logo" viewBox="0 0 64 64" role="img" aria-label="Logo de Copia Segura: un escudo con un check"><use href="#logo"/></svg>
+      <h1>Copias de carpetas <span>sin sustos</span></h1>
+      <p class="lead">Copia una carpeta de un equipo a un disco externo con Robocopy, paso a paso, con cada opción explicada y verificación al final. Portable: no se instala.</p>
+      <div class="cta">
+        <a class="btn primary" href="CopiaSegura.zip" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg>
+          Descargar para Windows
+        </a>
+        <a class="btn ghost" href="#pasos">Ver cómo funciona</a>
+      </div>
+      <p class="meta">Versión del {{FECHA}} · {{TAMANO}} · Windows 7 SP1, 10 y 11</p>
+      <div class="shot"><div class="win"><img src="img/paso4.png" width="996" height="799" alt="Pantalla de copia en curso: barra de progreso total, velocidad, tiempo restante y archivo actual"></div></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="ventajas">
+      <h2>Pensado para no perder datos</h2>
+      <p class="sub">Hecho para mantenimientos y migraciones, donde la copia que haces puede ser la única que existe.</p>
+      <div class="grid">
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg></div>
+          <h3>El origen no se toca</h3><p>Solo se lee. Las opciones que pueden borrar (espejo, mover) están bloqueadas hasta que escribes «BORRAR».</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8h.01M11 12h1v5h1"/></svg></div>
+          <h3>Cada opción, explicada</h3><p>Nada de memorizar parámetros: cada ajuste dice en español qué hace y cuál conviene en cada caso.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8.5 12.5l2.5 2.5 4.5-5"/></svg></div>
+          <h3>Verificación real</h3><p>Comparación rápida o prueba definitiva con SHA-256. «Terminada» nunca se confunde con «verificada».</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 14h18v6H3zM7 17h.01M5 14l2-8h10l2 8"/></svg></div>
+          <h3>Portable de verdad</h3><p>Un par de archivos que caben en un pendrive. No instala nada ni toca el registro del equipo del cliente.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h4M9 13h6M9 17h6"/></svg></div>
+          <h3>Informe para el cliente</h3><p>Opcional: un documento con equipo, fechas, resultado y verificación, listo para imprimir o guardar como PDF.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 5h18v12H3zM8 21h8M12 17v4"/></svg></div>
+          <h3>Desde Windows 7</h3><p>Funciona en Windows 7 SP1, 10 y 11 usando el Robocopy que ya trae el sistema.</p></div>
+      </div>
+    </section>
+
+    <section id="pasos">
+      <h2>Cinco pasos, sin complicaciones</h2>
+      <p class="sub">Un asistente te lleva de la mano. Así se ve el programa real.</p>
+      <div class="steps">
+        <div class="step"><div class="txt"><span class="num">1</span><h3>Elige origen y destino</h3><p>El programa comprueba que existan, que quepa la copia y que el destino no esté dentro del origen.</p></div>
+          <div class="win"><img loading="lazy" src="img/paso1.png" width="996" height="799" alt="Paso 1: carpetas de origen y destino con comprobaciones automáticas"></div></div>
+        <div class="step"><div class="txt"><span class="num">2</span><h3>Escoge cómo copiar</h3><p>«Copia segura» por defecto, «Copia rápida» o modo disco dudoso. Cada opción trae su explicación.</p></div>
+          <div class="win"><img loading="lazy" src="img/paso2.png" width="996" height="799" alt="Paso 2: perfiles y opciones explicadas"></div></div>
+        <div class="step"><div class="txt"><span class="num">3</span><h3>Revisa y empieza</h3><p>Un resumen en lenguaje llano y el comando exacto que se va a ejecutar, por si quieres verlo.</p></div>
+          <div class="win"><img loading="lazy" src="img/paso3.png" width="996" height="799" alt="Paso 3: resumen y comando de Robocopy"></div></div>
+        <div class="step"><div class="txt"><span class="num">4</span><h3>Sigue el progreso</h3><p>Progreso total y por archivo, velocidad y tiempo restante. Puedes pausar, reanudar o cancelar.</p></div>
+          <div class="win"><img loading="lazy" src="img/paso4.png" width="996" height="799" alt="Paso 4: copia en curso"></div></div>
+        <div class="step"><div class="txt"><span class="num">5</span><h3>Verifica y entrega</h3><p>Comprueba la copia, reintenta solo lo que falló y guarda el informe si lo necesitas.</p></div>
+          <div class="win"><img loading="lazy" src="img/paso5.png" width="996" height="799" alt="Paso 5: verificación e informe"></div></div>
+      </div>
+    </section>
+
+    <section id="descarga">
+      <div class="download">
+        <h2>Descárgalo, descomprime y listo</h2>
+        <p>Un zip pequeño con el programa y sus instrucciones. Sin instalador, sin cuentas, sin datos enviados a ningún sitio.</p>
+        <a class="btn" href="CopiaSegura.zip" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg>
+          Descargar CopiaSegura.zip · {{TAMANO}}
+        </a>
+        <code class="hash" title="Huella SHA-256 del zip">SHA-256: {{SHA256}}</code>
+      </div>
+
+      <h2 style="margin-top:40px">Antes de ejecutarlo</h2>
+      <div class="note ok">El origen solo se lee: nunca se modifica.</div>
+      <div class="note warn">Terminar la copia no significa que esté verificada. Conserva el origen hasta verificar y haz una segunda copia en otro soporte.</div>
+      <ul class="clean">
+        <li>El programa no está firmado digitalmente, así que Windows puede mostrar el aviso <i>SmartScreen</i>: pulsa «Más información» y «Ejecutar de todas formas». Si quieres asegurarte de que es el original, compara la huella SHA-256 de arriba.</li>
+        <li>Si Windows marca el zip como descargado de Internet, usa clic derecho › Propiedades › «Desbloquear» antes de descomprimir.</li>
+        <li>Deja <code>CopiaSegura.exe</code> y <code>CopiaSegura.exe.config</code> en la misma carpeta.</li>
+        <li>Windows XP no está soportado.</li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Copia Segura · <a href="https://github.com/yanker/Robocopy-Mtno">código fuente y documentación en GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -10,12 +10,14 @@ namespace CopiaSegura.UI
         // Guarda una captura PNG de cada paso en "dir" (para revisar el aspecto de la interfaz).
         public static string Shots(string dir)
         {
-            string tmp = Path.Combine(Path.GetTempPath(), "cs_shots_" + Guid.NewGuid().ToString("N"));
+            // Ruta neutra para que las capturas no muestren el usuario ni el equipo de quien las genera.
+            string tmp = @"C:\Temp\CopiaSegura_demo";
             try
             {
                 Directory.CreateDirectory(dir);
-                string src = Path.Combine(tmp, "origen");
-                string dst = Path.Combine(tmp, "destino");
+                if (Directory.Exists(tmp)) Directory.Delete(tmp, true);
+                string src = Path.Combine(tmp, "Origen");
+                string dst = Path.Combine(tmp, "Respaldo");
                 Directory.CreateDirectory(Path.Combine(src, "AppData"));
                 File.WriteAllText(Path.Combine(src, "documento.txt"), "hola");
                 using (FileStream fs = File.Create(Path.Combine(src, @"AppData\grande.dat"))) fs.SetLength(1500L * 1024 * 1024);
