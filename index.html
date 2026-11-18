@@ -90,6 +90,8 @@
   .note{border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.95rem}
   .note.ok{background:var(--okbg);color:var(--ok)}
   .note.warn{background:var(--warnbg);color:var(--warn)}
+  .before{max-width:680px;margin:0 auto 26px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .before h2{font-size:1.05rem;margin:0 0 8px}
   ul.clean{padding-left:20px;margin:8px 0 0}
   ul.clean li{margin:6px 0;color:var(--muted)}
   footer{margin-top:60px;padding:28px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem;text-align:center}
@@ -133,8 +135,18 @@
       <svg class="logo" viewBox="0 0 64 64" role="img" aria-label="Logo de Copia Segura: un escudo con un check"><use href="#logo"/></svg>
       <h1>Copias de carpetas <span>sin sustos</span></h1>
       <p class="lead">Copia una carpeta de un equipo a un disco externo con Robocopy, paso a paso, con cada opción explicada y verificación al final. Portable: no se instala.</p>
+      <div class="before" role="note" aria-label="Antes de ejecutarlo">
+        <h2>Antes de ejecutarlo</h2>
+        <div class="note ok">El origen solo se lee: nunca se modifica.</div>
+        <div class="note warn">Terminar la copia no significa que esté verificada. Conserva el origen hasta verificar y haz una segunda copia en otro soporte.</div>
+        <ul class="clean">
+          <li>El programa no está firmado digitalmente, así que Windows puede mostrar el aviso <i>SmartScreen</i>: pulsa «Más información» y «Ejecutar de todas formas». Si quieres asegurarte de que es el original, compara la huella SHA-256 que aparece más abajo, junto al botón de descarga.</li>
+          <li>Si Windows marca el zip como descargado de Internet, usa clic derecho › Propiedades › «Desbloquear» antes de descomprimir.</li>
+          <li>Deja <code>CopiaSegura.exe</code> y <code>CopiaSegura.exe.config</code> en la misma carpeta.</li>
+          <li>Windows XP no está soportado.</li>
+        </ul>
+      </div>
       <div class="cta">
-        <a class="btn primary" href="CopiaSegura.zip" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg>
           Descargar para Windows
         </a>
@@ -190,18 +202,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg>
           Descargar CopiaSegura.zip · 57 KB
         </a>
-        <code class="hash" title="Huella SHA-256 del zip">SHA-256: 426a04e772d08baf0b00f96221f29b77ac44b8ec618e9f31a9950d34adc9f614</code>
+        <code class="hash" title="Huella SHA-256 del zip">SHA-256: 2c9fa9476d4c7541b9ae79e9d546dee96c147a884975f3ef4028b468f3c394c8</code>
       </div>
-
-      <h2 style="margin-top:40px">Antes de ejecutarlo</h2>
-      <div class="note ok">El origen solo se lee: nunca se modifica.</div>
-      <div class="note warn">Terminar la copia no significa que esté verificada. Conserva el origen hasta verificar y haz una segunda copia en otro soporte.</div>
-      <ul class="clean">
-        <li>El programa no está firmado digitalmente, así que Windows puede mostrar el aviso <i>SmartScreen</i>: pulsa «Más información» y «Ejecutar de todas formas». Si quieres asegurarte de que es el original, compara la huella SHA-256 de arriba.</li>
-        <li>Si Windows marca el zip como descargado de Internet, usa clic derecho › Propiedades › «Desbloquear» antes de descomprimir.</li>
-        <li>Deja <code>CopiaSegura.exe</code> y <code>CopiaSegura.exe.config</code> en la misma carpeta.</li>
-        <li>Windows XP no está soportado.</li>
-      </ul>
     </section>
   </div>
 </main>
