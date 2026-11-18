@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Copia Segura · descarga</title>
+<meta name="description" content="Programa portable para Windows que copia carpetas a un disco externo con Robocopy, de forma guiada y segura.">
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --ink:#1d2733; --muted:#5d6b7a; --line:#d8dee6;
+    --pri:#1f6feb; --pri-ink:#ffffff; --ok:#1a7f37; --okbg:#e6f4ea; --warn:#b35900; --warnbg:#fff4e0;
+    --code:#14202e; --codeink:#b8e0ff;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1620; --card:#17212d; --ink:#e6edf5; --muted:#9aa9b9; --line:#2a3847;
+      --pri:#4c9bff; --pri-ink:#06121f; --ok:#5fd07f; --okbg:#12301c; --warn:#ffb454; --warnbg:#33260f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1620; --card:#17212d; --ink:#e6edf5; --muted:#9aa9b9; --line:#2a3847;
+    --pri:#4c9bff; --pri-ink:#06121f; --ok:#5fd07f; --okbg:#12301c; --warn:#ffb454; --warnbg:#33260f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif}
+  main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+  h1{font-size:2rem;margin:0 0 4px}
+  h2{font-size:1.15rem;margin:32px 0 10px}
+  .lead{color:var(--muted);margin:0 0 24px;font-size:1.08rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .download{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .btn{display:inline-block;background:var(--pri);color:var(--pri-ink);text-decoration:none;font-weight:600;
+       padding:12px 22px;border-radius:8px}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:focus-visible,a:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+  .meta{color:var(--muted);font-size:.9rem}
+  .hash{display:block;margin-top:14px;padding:10px 12px;border-radius:8px;background:var(--code);color:var(--codeink);
+        font:12.5px/1.4 Consolas,monospace;word-break:break-all}
+  ol,ul{padding-left:22px;margin:0}
+  li{margin:6px 0}
+  .note{border-radius:8px;padding:10px 14px;margin:12px 0;font-size:.95rem}
+  .note.ok{background:var(--okbg);color:var(--ok)}
+  .note.warn{background:var(--warnbg);color:var(--warn)}
+  a{color:var(--pri)}
+  footer{margin-top:40px;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+  <h1>Copia Segura</h1>
+  <p class="lead">Copia una carpeta de un equipo a un disco externo con Robocopy, paso a paso, con cada opción explicada y verificación al final. Portable: no se instala.</p>
+
+  <div class="card">
+    <div class="download">
+      <a class="btn" href="CopiaSegura.zip" download>Descargar CopiaSegura.zip</a>
+      <div class="meta">Versión del 18/11/2026 · 38 KB<br>Windows 7 SP1, 10 y 11</div>
+    </div>
+    <code class="hash" title="Huella SHA-256 del zip">SHA-256: 0d855ab7df81a57c659bffeebd6957cd6022ccbd2a3aa1e6c8e87cfccec8c2ea</code>
+  </div>
+
+  <h2>Cómo se usa</h2>
+  <ol>
+    <li>Descomprime el zip en cualquier carpeta o en un pendrive. No instala nada.</li>
+    <li>Ejecuta <code>CopiaSegura.exe</code> (déjalo junto a <code>CopiaSegura.exe.config</code>).</li>
+    <li>Elige el origen y el destino; el programa comprueba espacio y rutas.</li>
+    <li>Deja el perfil <b>Copia segura</b> si dudas, revisa el resumen y pulsa <b>Iniciar copia</b>.</li>
+    <li>Al terminar, <b>verifica</b> la copia (rápida o SHA-256) y, si quieres, guarda el informe.</li>
+  </ol>
+
+  <h2>Pensado para no perder datos</h2>
+  <div class="note ok">El origen solo se lee: nunca se modifica. Las opciones que pueden borrar (espejo, mover) están bloqueadas hasta escribir <b>BORRAR</b>.</div>
+  <div class="note warn">Terminar la copia no significa que esté verificada. Conserva el origen hasta verificar y haz una segunda copia en otro soporte.</div>
+
+  <h2>Antes de ejecutarlo</h2>
+  <ul>
+    <li>El programa no está firmado digitalmente, así que Windows puede mostrar el aviso <i>SmartScreen</i>: pulsa «Más información» y «Ejecutar de todas formas». Comprueba antes la huella SHA-256 de arriba si quieres asegurarte de que el zip es el original.</li>
+    <li>Si el zip viene marcado como descargado de Internet, usa clic derecho › Propiedades › «Desbloquear» antes de descomprimir.</li>
+    <li>Windows XP no está soportado.</li>
+  </ul>
+
+  <footer>
+    Código fuente y documentación: <a href="https://github.com/yanker/Robocopy-Mtno">github.com/yanker/Robocopy-Mtno</a>
+  </footer>
+</main>
+</body>
+</html>
