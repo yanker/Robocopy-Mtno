@@ -31,6 +31,11 @@ LIMITACIONES CONOCIDAS
   - Con varios hilos (/MT) Robocopy puede no mostrar el avance por archivo.
   - Si en el destino ya hay archivos con el mismo nombre, se sustituyen por los del origen.
 
+LICENCIA
+  - MIT-0: libre para usar, copiar, modificar y redistribuir sin ninguna condicion.
+  - Se entrega "tal cual", sin garantia. Verifica siempre la copia antes de fiarte de ella.
+  - Codigo fuente: https://github.com/yanker/Robocopy-Mtno
+
 REQUISITOS
   - Windows 7 SP1 o superior (usa el Robocopy de Windows).
   - En Windows 7 usa .NET 3.5, que viene de serie. En Windows 10/11 usa el .NET 4.x del sistema.

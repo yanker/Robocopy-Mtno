@@ -122,6 +122,12 @@ Para publicar una nueva versión de la descarga:
 - Dentro de `src/Core` no hay referencias a la interfaz, y los tests solo compilan esa carpeta.
 - Los ajustes viven en `datos\` junto al `.exe`; si esa carpeta es de solo lectura se usa `%TEMP%\CopiaSegura_datos`.
 
+## Licencia
+
+[MIT-0](LICENSE) (MIT sin atribución): úsalo, cópialo, modifícalo, véndelo o redistribúyelo como quieras, sin ninguna condición y sin tener que citar a nadie. Se entrega «tal cual», sin garantía: **antes de fiarte de una copia, verifícala**.
+
+El programa llama al `robocopy.exe` que ya trae Windows (de Microsoft); no lo incluye ni lo redistribuye.
+
 ## Limitaciones conocidas
 
 - Rutas de más de 260 caracteres: Robocopy las copia, pero el programa no puede recorrerlas ni verificarlas.
