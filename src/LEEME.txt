@@ -34,7 +34,6 @@ LIMITACIONES CONOCIDAS
 LICENCIA
   - MIT-0: libre para usar, copiar, modificar y redistribuir sin ninguna condicion.
   - Se entrega "tal cual", sin garantia. Verifica siempre la copia antes de fiarte de ella.
-  - Codigo fuente: https://github.com/yanker/Robocopy-Mtno
 
 REQUISITOS
   - Windows 7 SP1 o superior (usa el Robocopy de Windows).

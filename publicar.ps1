@@ -62,4 +62,4 @@ try {
     if (Test-Path $tmp) { & git worktree remove --force $tmp 2>&1 | Out-Null }
     & git worktree prune 2>&1 | Out-Null
 }
-Write-Host "Pagina: https://yanker.github.io/Robocopy-Mtno/  (si Pages esta activado: Settings > Pages > Branch: gh-pages)"
+Write-Host "Publicado en la rama gh-pages (GitHub Pages: Settings > Pages > Branch: gh-pages)."
