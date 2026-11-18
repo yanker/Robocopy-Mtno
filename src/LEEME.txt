@@ -1,0 +1,37 @@
+COPIA SEGURA - copia guiada de carpetas con Robocopy
+=====================================================
+
+USO
+  1. Ejecuta CopiaSegura.exe (no necesita instalar nada).
+  2. Paso 1: elige la carpeta de origen y el destino.
+  3. Paso 2: deja "Copia segura" si dudas. Cada opcion esta explicada.
+  4. Paso 3: revisa el resumen y pulsa "Iniciar copia".
+  5. Paso 5: verifica la copia (rapida o SHA-256) y, si quieres, guarda el informe.
+
+IMPORTANTE
+  - El origen solo se lee: el programa nunca lo modifica.
+  - No borra nada del destino salvo que desbloquees a mano las opciones peligrosas.
+  - Terminar la copia no significa verificada: usa el paso 5.
+  - Conserva el origen hasta verificar y haz una segunda copia en otro soporte.
+
+PORTABLE
+  - No instala nada ni toca el registro.
+  - Los ajustes se guardan en la carpeta "datos" junto al programa
+    (o en %TEMP%\CopiaSegura_datos si la carpeta es de solo lectura).
+  - Deja juntos CopiaSegura.exe y CopiaSegura.exe.config.
+
+LIMITACIONES CONOCIDAS
+  - Rutas de mas de 260 caracteres: Robocopy las copia, pero el programa no puede
+    recorrerlas para contarlas ni verificarlas (.NET 3.5). Saldran como "ilegibles" y la
+    verificacion no dara "correcta"; comprueba esos archivos a mano.
+  - Si ejecutas el programa desde dentro de la carpeta de origen, la carpeta "datos"
+    se creara alli. Ejecutalo desde un pendrive o desde otra carpeta.
+  - Los archivos que son enlaces simbolicos pueden aparecer como "FALTA" en la
+    verificacion, porque la copia los omite (/XJ).
+  - Con varios hilos (/MT) Robocopy puede no mostrar el avance por archivo.
+  - Si en el destino ya hay archivos con el mismo nombre, se sustituyen por los del origen.
+
+REQUISITOS
+  - Windows 7 SP1 o superior (usa el Robocopy de Windows).
+  - En Windows 7 usa .NET 3.5, que viene de serie. En Windows 10/11 usa el .NET 4.x del sistema.
+  - Windows XP no esta soportado.
